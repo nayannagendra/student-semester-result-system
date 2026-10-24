@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Portal | VIT Pune</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="brand">
+        <img src="vit-logo.png" alt="VIT Pune logo"
+             class="college-logo"
+             onerror="this.style.display='none'">
+        <div>
+            <h1>Vishwakarma Institute of Technology</h1>
+            <p>Pune, Maharashtra · Student Semester Result Portal</p>
+        </div>
+    </div>
+    <span class="session-tag">Academic Dashboard</span>
+</header>
+
+<main class="container">
+    <section class="welcome">
+        <div>
+            <p class="eyebrow">STUDENT ACADEMIC SERVICES</p>
+            <h2>Semester Results</h2>
+            <p>Manage student records, marks and academic performance.</p>
+        </div>
+        <button class="primary-btn" id="addButton">+ Add Student</button>
+    </section>
+
+    <section class="stats">
+        <article class="stat-card">
+            <span>Total Students</span>
+            <strong id="totalStudents">0</strong>
+            <small>Registered records</small>
+        </article>
+        <article class="stat-card">
+            <span>Students Passed</span>
+            <strong id="passedStudents">0</strong>
+            <small>All four subjects cleared</small>
+        </article>
+        <article class="stat-card">
+            <span>Average Percentage</span>
+            <strong id="averagePercentage">0%</strong>
+            <small>Across available records</small>
+        </article>
+    </section>
+
+    <section class="panel" id="formPanel" hidden>
+        <div class="panel-heading">
+            <div>
+                <h3 id="formTitle">Add Student</h3>
+                <p>Enter student details and marks for all four subjects.</p>
+            </div>
+            <button class="icon-btn" id="closeButton"
+                    aria-label="Close form">✕</button>
+        </div>
+
+        <form id="studentForm">
+            <input type="hidden" id="studentId">
+
+            <div class="form-grid">
+                <label>Student PRN
+                    <input id="prn" required maxlength="40"
+                           placeholder="Enter PRN">
+                </label>
+                <label>Student Full Name
+                    <input id="name" required maxlength="100"
+                           placeholder="Enter full name">
+                </label>
+                <label>Semester
+                    <select id="semester" required>
+                        <option value="">Select semester</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </label>
+            </div>
+
+            <h4 class="marks-heading">Subject marks</h4>
+            <p class="helper">MSE: maximum 30 marks · ESE: maximum 70 marks</p>
+
+            <div class="marks-grid">
+                <div class="subject-card">
+                    <h4>Subject 1</h4>
+                    <label>MSE / 30
+                        <input type="number" id="subject1Mse"
+                               min="0" max="30" value="0" required>
+                    </label>
+                    <label>ESE / 70
+                        <input type="number" id="subject1Ese"
+                               min="0" max="70" value="0" required>
+                    </label>
+                </div>
+                <div class="subject-card">
+                    <h4>Subject 2</h4>
+                    <label>MSE / 30
+                        <input type="number" id="subject2Mse"
+                               min="0" max="30" value="0" required>
+                    </label>
+                    <label>ESE / 70
+                        <input type="number" id="subject2Ese"
+                               min="0" max="70" value="0" required>
+                    </label>
+                </div>
+                <div class="subject-card">
+                    <h4>Subject 3</h4>
+                    <label>MSE / 30
+                        <input type="number" id="subject3Mse"
+                               min="0" max="30" value="0" required>
+                    </label>
+                    <label>ESE / 70
+                        <input type="number" id="subject3Ese"
+                               min="0" max="70" value="0" required>
+                    </label>
+                </div>
+                <div class="subject-card">
+                    <h4>Subject 4</h4>
+                    <label>MSE / 30
+                        <input type="number" id="subject4Mse"
+                               min="0" max="30" value="0" required>
+                    </label>
+                    <label>ESE / 70
+                        <input type="number" id="subject4Ese"
+                               min="0" max="70" value="0" required>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="secondary-btn"
+                        id="cancelButton">Cancel</button>
+                <button type="submit" class="primary-btn"
+                        id="saveButton">Save Student</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading records-heading">
+            <div>
+                <h3>Student Records</h3>
+                <p>Search, review, update or remove a record.</p>
+            </div>
+            <input id="searchInput" class="search-input"
+                   placeholder="Search PRN or student name..."
+                   aria-label="Search student records">
+        </div>
+
+        <div id="message" class="message" role="status"></div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>PRN</th>
+                    <th>Semester</th>
+                    <th>Total / 400</th>
+                    <th>Percentage</th>
+                    <th>Result</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="studentTable">
+                <tr><td colspan="7" class="empty">
+                    Loading student records...
+                </td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="table-note">
+            Pass criteria used in this project: at least 40/100 in each subject.
+        </p>
+    </section>
+</main>
+
+<footer>
+    <p>Student Semester Result System · Academic project · VIT Pune</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
